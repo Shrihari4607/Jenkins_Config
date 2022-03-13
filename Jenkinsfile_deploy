@@ -7,7 +7,7 @@ pipeline {
         stage('Approval') {
             steps {
             emailext (subject: "Approval for Production deployment: ", 
-            body: "Request has been submitted to deloy <b>${app_name}-1.0.${build_number}</b> to <b>Production</b> "+"<br><br>Please verify and approve the job:${JOB_URL}"+"${BUILD_NUMBER}"+"/console" + '''
+            body: "Request has been submitted to deloy <b>${app_name}-1.0.${build_number}</b> to <b>Production</b> "+"<br><br>Please verify and approve the job:${JOB_URL}"+"${BUILD_NUMBER}"+"/console" + '''<br><br>
             <html>
             <head>
             </head>
@@ -15,7 +15,7 @@ pipeline {
             <div>
             <p class=MsoNormal><span style='font-size:10.0pt;font-family:"Georgia",serif'>Regards,<o:p></o:p></span></p>
             <b>
-            <span style='font-size:10.0pt;font-family:"Georgia",serif;color:black'>DevOps Support,<o:p></o:p></span></p>
+            <span style='font-size:10.0pt;font-family:"Georgia",serif;color:black'>DevOps Support<o:p></o:p></span></p>
             </b>
             </div>
             </body>
