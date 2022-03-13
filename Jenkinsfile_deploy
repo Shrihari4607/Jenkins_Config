@@ -2,18 +2,25 @@ pipeline {
     agent any
     
     stages {
-      //stage('Scm') {
-          //  steps {
-              // checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Shrihari4607/mvn_app1.git']]])
-           // }
-        //}
-        // webhook test
+      
         
         stage('Approval') {
             steps {
             emailext (subject: "Approval for Production deployment: ", 
             body: "Request has been submitted to deloy <b>${app_name}-1.0.${build_number}</b> to <b>Production</b> "+"<br><br>Please verify and approve the job:${JOB_URL}"+"${BUILD_NUMBER}"+"/console",
-                //echo "uploading ${app_name}-1.0.${BUILD_Number}.zip to Nexus"
+            '''
+            <html>
+            <head>
+            </head>
+            <body>
+            <div>
+            <p class=MsoNormal><span style='font-size:10.0pt;font-family:"Georgia",serif'>Regards,<o:p></o:p></span></p>
+            <b>
+            <span style='font-size:10.0pt;font-family:"Georgia",serif;color:black'>DevOps Support,<o:p></o:p></span></p>
+            </b>
+            </div>
+            </body>
+            </html>'''
                 to: 'shrihari4607@gmail.com')
             }
         }
@@ -22,16 +29,12 @@ pipeline {
             echo "waiting for approval"
             echo "----------------------------------------"
             input "Do you want to approve the Job to deploy ${app_name}-1.0.${build_number} to Production: ?"
-                echo "Deploying ${app_name}-1.0.${BUILD_Number}.zip to non-prod environments"
+            echo "Deploying ${app_name}-1.0.${BUILD_Number}.zip to non-prod environments"
             }
         }
     }
     post {
-        always{
-           // emailext ( body: 'test', subject: '', 
-                      //to: 'shrihari4607@gmail.com')
-            
-            //env.ForEmailPlugin = env.WORKSPACE      
+        always{  
             emailext body: '''${SCRIPT, template="groovy_html.template"}''', 
             subject: currentBuild.currentResult + " : " + env.JOB_NAME, 
             to: 'shrihari4607@gmail.com'
