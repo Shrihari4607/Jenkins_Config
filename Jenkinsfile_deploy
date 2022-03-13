@@ -2,8 +2,6 @@ pipeline {
     agent any
     
     stages {
-      
-        
         stage('Approval') {
             steps {
             emailext (subject: "Approval for Production deployment: ", 
